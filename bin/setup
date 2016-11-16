@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+
+# Exit if any subcommand fails
+set -e
+
+# Exit if using the wrong version of Elixir
+if elixir --version | tail -1 | grep --quiet --invert-match "Elixir 1\.[3]"; then
+  echo "Elixir 1.3 is required to run the application."
+  echo
+  echo "If using homebrew, run:"
+  echo "  brew update"
+  echo "  brew upgrade elixir"
+  echo
+  exit 1
+fi
+
+# Clean the build
+echo "Removing previous build artifacts"
+rm -rf _build
+rm -rf deps
+
+# Set up phoenix
+echo "Setting up dependencies\n"
+mix local.hex --force
+mix deps.get
+mix deps.compile
+mix compile
+
+# Set up database
+echo "Dropping existing databases"
+mix ecto.drop
+
+echo "Creating and migrating database"
+echo "If the next commands fail, check the username/password in config/dev.secret.exs"
+mix ecto.create
+mix ecto.migrate
