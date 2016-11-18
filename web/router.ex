@@ -14,9 +14,9 @@ defmodule MovieWagerApi.Router do
     plug :fetch_session
   end
 
-  scope "/", MovieWagerApi do
+  scope "/api/v1", MovieWagerApi do
     pipe_through :api
 
-    resources "/movie-round", MovieRoundController, only: [:index]
+    resources "/movie-rounds", MovieRoundController, only: [:index]
   end
 end
