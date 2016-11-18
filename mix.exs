@@ -30,7 +30,9 @@ defmodule MovieWagerApi.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.2.1"},
+    [{:ex_machina, "~> 1.0", only: :test},
+     {:ja_serializer, "~> 0.11.1"},
+     {:phoenix, "~> 1.2.1"},
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.0"},
      {:postgrex, ">= 0.0.0"},

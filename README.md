@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/joekain/bmark.svg?branch=master)](https://travis-ci.org/joekain/bmark)
+
 # MovieWagerApi
 
 ## What you need:

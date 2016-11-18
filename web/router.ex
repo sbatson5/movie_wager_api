@@ -10,17 +10,13 @@ defmodule MovieWagerApi.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, ["json-api"]
+    plug :fetch_session
   end
 
   scope "/", MovieWagerApi do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :api
 
-    get "/", PageController, :index
+    resources "/movie-round", MovieRoundController, only: [:index]
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", MovieWagerApi do
-  #   pipe_through :api
-  # end
 end
