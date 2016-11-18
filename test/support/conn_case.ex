@@ -25,6 +25,7 @@ defmodule MovieWagerApi.ConnCase do
       import Ecto.Changeset
       import Ecto.Query
       import MovieWagerApi.Factory
+      import MovieWagerApi.TestHelpers
 
       import MovieWagerApi.Router.Helpers
 

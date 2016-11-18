@@ -17,6 +17,6 @@ defmodule MovieWagerApi.MovieRound do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:code, :start_date, :end_date, :box_office_amount, :title])
-    |> validate_required([:code, :start_date, :end_date, :box_office_amount, :title])
+    |> validate_required([:code, :start_date, :end_date, :title])
   end
 end
