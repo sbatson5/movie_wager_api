@@ -5,8 +5,9 @@ defmodule MovieWagerApi.MovieRoundController do
 
   def index(conn, _params) do
     movie_rounds = Repo.all(MovieRound)
-    |> MovieRoundSerializer.format(conn)
 
-    json(conn, movie_rounds)
+    serialized_rounds = JaSerializer.format(MovieRoundSerializer, movie_rounds, conn)
+
+    json(conn, serialized_rounds)
   end
 end

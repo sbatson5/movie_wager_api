@@ -3,7 +3,13 @@ defmodule MovieWagerApi.MovieRoundTest do
 
   alias MovieWagerApi.MovieRound
 
-  @valid_attrs %{box_office_amount: 42, code: "some content", end_date: %{day: 17, month: 4, year: 2010}, start_date: %{day: 17, month: 4, year: 2010}, title: "some content"}
+  @valid_attrs %{
+    box_office_amount: 42,
+    code: "DATMOVIE",
+    end_date: %{day: 17, month: 4, year: 2016},
+    start_date: %{day: 20, month: 4, year: 2016},
+    title: "Best movie ever"
+  }
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
