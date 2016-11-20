@@ -15,3 +15,7 @@ config :movie_wager_api, MovieWagerApi.Repo,
   database: "movie_wager_api_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Finally import the config/test.secret.exs
+# which should be versioned separately.
+import_config "test.secret.exs"
