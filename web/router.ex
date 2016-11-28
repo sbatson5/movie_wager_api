@@ -12,11 +12,12 @@ defmodule MovieWagerApi.Router do
   pipeline :api do
     plug :accepts, ["json-api"]
     plug :fetch_session
+    plug JaSerializer.Deserializer
   end
 
   scope "/api/v1", MovieWagerApi do
     pipe_through :api
 
-    resources "/movie-rounds", MovieRoundController, only: [:index]
+    resources "/movie-rounds", MovieRoundController, only: [:index, :create]
   end
 end
