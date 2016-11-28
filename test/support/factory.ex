@@ -10,4 +10,11 @@ defmodule MovieWagerApi.Factory do
       title: "Funky Monkey Bunch"
     }
   end
+
+  def user_factory do
+    %MovieWagerApi.User{
+      username: "scottbot",
+      profile_image_url: "http://scottbott.com/image.jpg"
+    }
+  end
 end
