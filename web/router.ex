@@ -19,5 +19,6 @@ defmodule MovieWagerApi.Router do
     pipe_through :api
 
     resources "/movie-rounds", MovieRoundController, only: [:index, :create]
+    resources "/users", UserController, only: [:show]
   end
 end
