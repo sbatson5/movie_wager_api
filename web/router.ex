@@ -20,5 +20,6 @@ defmodule MovieWagerApi.Router do
 
     resources "/movie-rounds", MovieRoundController, only: [:index, :create]
     resources "/users", UserController, only: [:show]
+    resources "/twitter-auth", TwitterController, only: [:create]
   end
 end

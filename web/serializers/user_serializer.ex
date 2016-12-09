@@ -1,5 +1,5 @@
 defmodule MovieWagerApi.UserSerializer do
   use JaSerializer
 
-  attributes [:username, :profile_image_url]
+  attributes [:screen_name, :profile_image_url, :twitter_id, :name]
 end

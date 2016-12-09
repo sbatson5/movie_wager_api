@@ -22,6 +22,13 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :extwitter, :oauth, [
+   consumer_key: ""
+   consumer_secret: ""
+   access_token: ""
+   access_token_secret: ""
+]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
