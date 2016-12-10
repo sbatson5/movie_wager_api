@@ -21,8 +21,8 @@ defmodule MovieWagerApi.UserControllerTest do
       |> json_response(200)
     end
 
-    test "it returns a 200 when given a valid username", %{conn: conn} do
-      user = insert(:user , username: "scottisawesome")
+    test "it returns a 200 when given a valid screen_name", %{conn: conn} do
+      user = insert(:user , screen_name: "scottisawesome")
 
       conn
       |> get(user_path(conn, :show, "scottisawesome"))

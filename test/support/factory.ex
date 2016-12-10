@@ -13,8 +13,10 @@ defmodule MovieWagerApi.Factory do
 
   def user_factory do
     %MovieWagerApi.User{
-      username: "scottbot",
-      profile_image_url: "http://scottbott.com/image.jpg"
+      screen_name: "scottbot",
+      profile_image_url: "http://scottbott.com/image.jpg",
+      name: "Scott Bot",
+      twitter_id: 123
     }
   end
 end

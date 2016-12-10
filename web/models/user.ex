@@ -13,7 +13,7 @@ defmodule MovieWagerApi.User do
     struct
     |> cast(params, [:screen_name, :profile_image_url, :twitter_id, :name])
     |> unique_constraint(:screen_name)
-    |> validate_required([:screen_name])
+    |> validate_required([:screen_name, :twitter_id])
   end
 
   def by_id_or_screen_name(identifier) when is_integer(identifier) do
