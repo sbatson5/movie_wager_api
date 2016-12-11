@@ -1,7 +1,8 @@
 defmodule MovieWagerApi.TestHelpers do
+  import Plug.Conn, only: [put_session: 3, fetch_session: 1]
+
   def json_for(type, attributes) do
     attributes = normalize_json_attributes(attributes)
-
     %{
       "data" => %{
         "type" =>  Atom.to_string(type) |> String.replace("_", "-"),
@@ -19,6 +20,10 @@ defmodule MovieWagerApi.TestHelpers do
   def json_for(type, attributes, id) do
     json = json_for(type, attributes)
     put_in json["data"]["id"], id
+  end
+
+  def sign_in(conn, %MovieWagerApi.User{} = user) do
+    conn |> Plug.Conn.assign(:user, user)
   end
 
   defp normalize_json_attributes(attributes) do

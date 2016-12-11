@@ -34,7 +34,7 @@ defmodule MovieWagerApi.TwitterController do
     case add_or_update_user(user) do
       {:ok, user} ->
         Authentication.sign_in(conn, user)
-        json(conn, %{"user_id" => user.id})
+        |> json(%{"user_id" => user.id})
       {:error, changeset} ->
         send_resp(conn, :unprocessable_entity, "")
     end
