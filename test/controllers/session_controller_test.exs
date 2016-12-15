@@ -10,7 +10,7 @@ defmodule MovieWagerApi.SessionControllerTest do
     test "it returns a user when given a user is logged in", %{conn: conn} do
       resp = conn
         |> sign_in(insert(:user, screen_name: "cabbage"))
-        |> get(session_path(conn, :show, "movie-wager"))
+        |> get(session_path(conn, :show))
         |> json_response(200)
 
       assert resp["data"]["attributes"]["screen-name"] == "cabbage"
@@ -18,7 +18,7 @@ defmodule MovieWagerApi.SessionControllerTest do
     end
 
     test "it returns no content when not signed in", %{conn: conn} do
-      resp = get(conn, session_path(conn, :show, "movie-wager"))
+      resp = get(conn, session_path(conn, :show))
 
       assert resp.status == 401
     end
@@ -29,7 +29,7 @@ defmodule MovieWagerApi.SessionControllerTest do
       user = insert(:user)
 
       conn = sign_in(conn, user)
-        |> delete(session_path(conn, :delete, "movie-wager"))
+        |> delete(session_path(conn, :delete))
 
       assert conn.status == 204
     end

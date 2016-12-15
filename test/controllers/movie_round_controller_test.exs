@@ -8,11 +8,13 @@ defmodule MovieWagerApi.MovieRoundControllerTest do
 
   describe "GET index" do
     test "it returns the proper payload with no params", %{conn: conn} do
-      [first_movie_round, second_movie_round] = insert_pair(:movie_round)
+      insert_pair(:movie_round)
 
-      conn
-      |> get(movie_round_path(conn, :index))
-      |> json_response(200)
+      resp = conn
+        |> get(movie_round_path(conn, :index))
+        |> json_response(200)
+
+      assert length(resp["data"]) == 2
     end
   end
 

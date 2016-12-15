@@ -1,15 +1,18 @@
 defmodule MovieWagerApi.TwitterController do
   use MovieWagerApi.Web, :controller
 
-  alias MovieWagerApi.{Authentication, Repo, User, UserSerializer}
+  alias MovieWagerApi.{Authentication, Repo, User}
+
+  @redirect_url Application.get_env(:movie_wager_api, :client)[:url]
+  @consumer_key Application.get_env(:extwitter, :oauth)[:consumer_key]
+  @consumer_secret Application.get_env(:extwitter, :oauth)[:consumer_secret]
 
   def create(conn, %{"oauth_token" => oauth_token, "oauth_verifier" => oauth_verifier}) do
     case ExTwitter.access_token(oauth_verifier, oauth_token) do
       {:ok, access_token} ->
-        # TODO: pull consumer info from system
         ExTwitter.configure(
-          consumer_key: "t5uCiD2SrYK6Zc9AuILSly7C5",
-          consumer_secret: "CogJgS1Y0ZpTNsq3PjZX0KTOUOrototM7dIgipVe2fjS68SOm6",
+          consumer_key: @consumer_key,
+          consumer_secret: @consumer_secret,
           access_token: access_token.oauth_token,
           access_token_secret: access_token.oauth_token_secret
         )
@@ -23,8 +26,7 @@ defmodule MovieWagerApi.TwitterController do
   end
 
   def create(conn, _) do
-    # TODO: get redirect URL from system
-    token = ExTwitter.request_token("http://localhost:4200/authenticated")
+    token = ExTwitter.request_token("#{@redirect_url}/authenticated")
     {:ok, authenticate_url} = ExTwitter.authenticate_url(token.oauth_token)
 
     json(conn, %{"url" => authenticate_url})
@@ -35,7 +37,7 @@ defmodule MovieWagerApi.TwitterController do
       {:ok, user} ->
         Authentication.sign_in(conn, user)
         |> json(%{"user_id" => user.id})
-      {:error, changeset} ->
+      {:error, _changeset} ->
         send_resp(conn, :unprocessable_entity, "")
     end
   end

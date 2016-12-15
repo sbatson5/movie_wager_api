@@ -25,10 +25,10 @@ defmodule MovieWagerApi.UserControllerTest do
     end
 
     test "it returns a 200 when given a valid screen_name", %{conn: conn} do
-      user = insert(:user , screen_name: "scottisawesome")
+      user = insert(:user, screen_name: "scottisawesome")
 
       resp = conn
-        |> get(user_path(conn, :show, "scottisawesome"))
+        |> get(user_path(conn, :show, user.screen_name))
         |> json_response(200)
 
       assert resp["data"]["attributes"]["screen-name"] == "scottisawesome"

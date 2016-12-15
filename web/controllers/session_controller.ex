@@ -1,7 +1,7 @@
 defmodule MovieWagerApi.SessionController do
   use MovieWagerApi.Web, :controller
 
-  alias MovieWagerApi.{Repo, User, UserSerializer}
+  alias MovieWagerApi.UserSerializer
 
   @no_authentication "User is not logged in"
 

@@ -23,14 +23,14 @@ defmodule MovieWagerApi.UserTest do
     assert Repo.one(query).screen_name == user.screen_name
   end
 
-  test "`by_id_or_screen_name` queries by string id's" do
-    user = insert(:user, id: 5)
+  test "`by_id_or_screen_name` queries by string id" do
+    insert(:user, id: 5)
     query = User.by_id_or_screen_name("5")
 
     assert Repo.one(query).id == 5
   end
 
-  test "by_id_or_screen_name` queries by screen_name when passed" do
+  test "by_id_or_screen_name` queries by screen_name" do
     screen_name = "scottisawesome"
     user = insert(:user, screen_name: screen_name)
     query = User.by_id_or_screen_name(screen_name)

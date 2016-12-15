@@ -5,7 +5,7 @@ defmodule MovieWagerApi.Repo.Migrations.CreateUser do
     create table(:users) do
       add :screen_name, :string, null: false
       add :profile_image_url, :string
-      add :twitter_id, :integer, null: false
+      add :twitter_id, :bigint, null: false
       add :name, :string
 
       timestamps()

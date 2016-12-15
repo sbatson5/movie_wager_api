@@ -21,7 +21,7 @@ defmodule MovieWagerApi.MovieRoundController do
         |> put_status(:created)
         |> json(serialized_movie_round)
 
-      {:error, changeset} ->
+      {:error, _changeset} ->
         send_resp(conn, :unprocessable_entity, "")
     end
   end
