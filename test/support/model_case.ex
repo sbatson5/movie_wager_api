@@ -22,6 +22,7 @@ defmodule MovieWagerApi.ModelCase do
       import Ecto.Changeset
       import Ecto.Query
       import MovieWagerApi.ModelCase
+      import MovieWagerApi.Factory
     end
   end
 

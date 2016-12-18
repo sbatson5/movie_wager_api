@@ -10,7 +10,7 @@ You will also need Postgres -- which can be installed with homebrew: `brew insta
 
 ## Setting up your credentials
 
-Copy the `dev.secret.example.exs` to `dev.secret.exz` file and uncomment out the block of code.
+Copy the `dev.secret.example.exs` to `dev.secret.exs` file and uncomment out the block of code.
 Enter in your postgres credentials:
 
 ```
@@ -21,6 +21,19 @@ config :movie_wager_api, MovieWagerApi.Repo,
 
 Similarly, you will want to follow the same steps for `test.secret.example.exs`.
 The secret files are not checked into source control, so don't worry about your credentials being shared.
+
+## Setting up Twitter Authentication
+
+The `dev.secret.exs` and `test.secret.exs` files also include information for the twitter OAuth API.
+
+```
+config :extwitter, :oauth, [
+   consumer_key: "your_consumer_key",
+   consumer_secret: "your_consumer_secret",
+   access_token: "your_access_token",
+   access_token_secret: "your_access_token_secret"
+]
+```
 
 ## Setting up the app
 To get everything running quickly, I set up a `setup` script.

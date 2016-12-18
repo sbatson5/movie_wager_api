@@ -19,7 +19,7 @@ defmodule MovieWagerApi.Mixfile do
   def application do
     [mod: {MovieWagerApi, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :ja_serializer]]
+                    :phoenix_ecto, :postgrex, :ja_serializer, :extwitter]]
   end
 
   # Specifies which paths to compile per environment.
@@ -40,7 +40,9 @@ defmodule MovieWagerApi.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
-     {:distillery, "~> 0.10" }]
+     {:distillery, "~> 0.10" },
+     {:oauth, github: "tim/erlang-oauth"},
+     {:extwitter, "~> 0.6"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.
