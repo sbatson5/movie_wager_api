@@ -22,5 +22,19 @@ defmodule MovieWagerApi.WagerControllerTest do
         |> assert_jsonapi_relationship("user", user.id)
         |> assert_jsonapi_relationship("movie-round", movie_round.id)
     end
+
+    test "it returns 422 with duplicate round and user", %{conn: conn} do
+      wager_params = %{amount: 5, place: nil}
+      original_wager = insert(:wager)
+
+      json = json_for(:wager, wager_params)
+        |> put_relationships(original_wager.user, original_wager.movie_round)
+
+      resp = conn
+        |> post(wager_path(conn, :create), json)
+
+      assert resp.status == 422
+      assert resp.resp_body == "You have already created a bet for this round"
+    end
   end
 end

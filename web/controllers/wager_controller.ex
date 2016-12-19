@@ -13,7 +13,11 @@ defmodule MovieWagerApi.WagerController do
       {:ok, wager} ->
         serialized_wager(conn, wager, :created)
       {:error, changeset} ->
-        send_resp(conn, :unprocessable_entity, changeset.errors)
+        if changeset.errors[:user_movie_round] do
+          send_resp(conn, :unprocessable_entity, "You have already created a bet for this round")
+        else
+          send_resp(conn, :unprocessable_entity, "Invalid entry")
+        end
     end
   end
 
