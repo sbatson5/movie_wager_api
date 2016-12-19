@@ -3,7 +3,7 @@ defmodule MovieWagerApi.WagerTest do
 
   alias MovieWagerApi.Wager
 
-  @valid_attrs %{amount: 42, place: 42}
+  @valid_attrs %{amount: 42, place: 42, user_id: 50, movie_round_id: 55}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

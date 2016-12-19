@@ -24,5 +24,6 @@ defmodule MovieWagerApi.Router do
     resources "/twitter-auth", TwitterController, only: [:create]
     get "/session", SessionController, :show
     delete "/session", SessionController, :delete
+    resources "/wagers", WagerController, only: [:create, :update]
   end
 end
