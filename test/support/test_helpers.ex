@@ -46,4 +46,29 @@ defmodule MovieWagerApi.TestHelpers do
   defp normalize_json_attribute(_key, %Ecto.Association.NotLoaded{} = _value), do: nil
 
   defp normalize_json_attribute(key, value), do: {key, value}
+
+  def put_relationships(payload, record_1, record_2), do: put_relationships(payload, [record_1, record_2])
+
+  def put_relationships(payload, records) do
+    relationships = build_relationships(%{}, records)
+    payload |> put_in(["data", "relationships"], relationships)
+  end
+
+  defp build_relationships(relationship_map, []), do: relationship_map
+  defp build_relationships(relationship_map, [head | tail]) do
+    relationship_map
+    |> Map.put(get_record_name(head), %{data: %{id: head.id}})
+    |> build_relationships(tail)
+  end
+  defp build_relationships(relationship_map, single_param) do
+    build_relationships(relationship_map, [single_param])
+  end
+
+  defp get_record_name(record) do
+    record.__struct__
+    |> Module.split
+    |> List.last
+    |> Macro.underscore
+    |> String.to_existing_atom
+  end
 end

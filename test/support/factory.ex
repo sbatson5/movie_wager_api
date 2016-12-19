@@ -19,4 +19,12 @@ defmodule MovieWagerApi.Factory do
       twitter_id: 123
     }
   end
+
+  def wager_factory do
+    %MovieWagerApi.Wager{
+      amount: 100000,
+      user: build(:user),
+      movie_round: build(:movie_round)
+    }
+  end
 end
