@@ -29,8 +29,8 @@ defmodule MovieWagerApi.WagerController do
     case Repo.update(changeset) do
       {:ok, wager} ->
         serialized_wager(conn, wager, 200)
-      {:error, changeset} ->
-        send_resp(conn, :unprocessable_entity, changeset.errors)
+      {:error, _changeset} ->
+        send_resp(conn, :unprocessable_entity, "")
     end
   end
 

@@ -3,7 +3,7 @@ defmodule MovieWagerApi.Factory do
 
   def movie_round_factory do
     %MovieWagerApi.MovieRound{
-      code: "Monkey",
+      code: sequence(:code, &"Monkey #{&1}: Die Harder"),
       start_date: Ecto.Date.from_erl({2016,1,1}),
       end_date: Ecto.Date.from_erl({2016,1,3}),
       box_office_amount: 10000000,
@@ -13,7 +13,7 @@ defmodule MovieWagerApi.Factory do
 
   def user_factory do
     %MovieWagerApi.User{
-      screen_name: "scottbot",
+      screen_name: sequence(:screen_name, &"scottbot_#{&1}"),
       profile_image_url: "http://scottbott.com/image.jpg",
       name: "Scott Bot",
       twitter_id: 123
