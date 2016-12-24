@@ -21,6 +21,15 @@ defmodule MovieWagerApi.WagerController do
     end
   end
 
+  def index(conn, %{"user_id" => user_id, "movie_round_id" => movie_round_id}) do
+    wagers = Wager
+      |> where(user_id: ^user_id)
+      |> where(movie_round_id: ^movie_round_id)
+      |> Repo.all
+
+    serialized_wager(conn, wagers, 200)
+  end
+
   def update(conn, %{"id" => id, "data" => %{"attributes" => wager_params}}) do
     wager = Repo.get!(Wager, id)
 
@@ -50,7 +59,10 @@ defmodule MovieWagerApi.WagerController do
   end
 
   defp get_relationship_ids(%{"movie_round" => movie_round_params, "user" => user_params}) do
-    %{"user_id" => get_id(user_params), "movie_round_id" => get_id(movie_round_params)}
+    %{
+      "user_id" => get_id(user_params),
+      "movie_round_id" => get_id(movie_round_params)
+    }
   end
 
   defp get_id(%{"data" => %{"id" => id}}), do: id

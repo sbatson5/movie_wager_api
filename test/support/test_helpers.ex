@@ -1,15 +1,15 @@
 defmodule MovieWagerApi.TestHelpers do
-  import Plug.Conn, only: [put_session: 3, fetch_session: 1]
   import ExUnit.Assertions
-
-  def assert_jsonapi_relationship(json = %{"relationships" => relationships}, relationship_name, id) do
-    assert relationships[relationship_name]["data"]["id"] == Integer.to_string(id)
-    json
-  end
 
   def assert_jsonapi_relationship(json, relationship_name, id) do
     assert json["data"]["relationships"][relationship_name]["data"]["id"] == Integer.to_string(id)
     json
+  end
+
+  def ids_from_response(response) do
+    Enum.map response["data"], fn(attributes) ->
+      String.to_integer(attributes["id"])
+    end
   end
 
   def json_for(type, attributes) do

@@ -11,6 +11,12 @@ defmodule MovieWagerApi.MovieRoundController do
     json(conn, serialized_rounds)
   end
 
+  def show(conn, %{"id" => id}) do
+    round = Repo.get(MovieRound, id)
+    serialized_round = JaSerializer.format(MovieRoundSerializer, round, conn)
+    json(conn, serialized_round)
+  end
+
   def create(conn, %{"data" =>  %{"attributes" => movie_round_params}}) do
     changeset = MovieRound.changeset(%MovieRound{}, movie_round_params)
     case Repo.insert(changeset) do
