@@ -1,6 +1,8 @@
 defmodule MovieWagerApi.MovieRoundSerializer do
   use JaSerializer
 
+  alias MovieWagerApi.MovieDetailSerializer
+
   attributes [
     :code,
     :start_date,
@@ -8,4 +10,8 @@ defmodule MovieWagerApi.MovieRoundSerializer do
     :box_office_amount,
     :title
   ]
+
+  has_one :movie_detail,
+    serializer: MovieDetailSerializer,
+    include: true
 end

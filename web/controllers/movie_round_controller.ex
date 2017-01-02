@@ -1,10 +1,12 @@
 defmodule MovieWagerApi.MovieRoundController do
   use MovieWagerApi.Web, :controller
 
-  alias MovieWagerApi.{Repo, MovieRound, MovieRoundSerializer}
+  alias MovieWagerApi.{Repo, MovieRound, MovieRoundSerializer, MovieDetail}
 
   def index(conn, _params) do
-    movie_rounds = Repo.all(MovieRound)
+    movie_rounds = MovieRound
+     |> Repo.all
+     |> Repo.preload(:movie_detail)
 
     serialized_rounds = JaSerializer.format(MovieRoundSerializer, movie_rounds, conn)
 
