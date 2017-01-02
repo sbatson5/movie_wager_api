@@ -18,6 +18,18 @@ defmodule MovieWagerApi.MovieRoundControllerTest do
     end
   end
 
+  describe "GET show" do
+    test "it returns a single record with a proper id", %{conn: conn} do
+      [movie_round, _] = insert_pair(:movie_round)
+
+      resp = conn
+        |> get(movie_round_path(conn, :show, movie_round.id))
+        |> json_response(200)
+
+      assert resp["data"]["id"] == Integer.to_string(movie_round.id)
+    end
+  end
+
   describe "POST create" do
     test "it inserts records with proper params", %{conn: conn} do
       movie_params = params_for(:movie_round, title: "movie title")

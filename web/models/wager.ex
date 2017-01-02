@@ -13,8 +13,8 @@ defmodule MovieWagerApi.Wager do
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:amount, :place])
-    |> validate_required([:amount, :place])
+    |> cast(params, [:amount, :place, :user_id, :movie_round_id])
+    |> validate_required([:amount, :user_id, :movie_round_id])
     |> unique_constraint(:user_movie_round, name: :wagers_user_movie_round_idx)
   end
 end
