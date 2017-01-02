@@ -21,14 +21,32 @@ defmodule MovieWagerApi.MovieRoundController do
     changeset = MovieRound.changeset(%MovieRound{}, movie_round_params)
     case Repo.insert(changeset) do
       {:ok, movie_round} ->
-        serialized_movie_round = JaSerializer.format(MovieRoundSerializer, movie_round, conn)
-
-        conn
-        |> put_status(:created)
-        |> json(serialized_movie_round)
+        serialized_movie_round(conn, movie_round, :created)
 
       {:error, _changeset} ->
         send_resp(conn, :unprocessable_entity, "")
     end
+  end
+
+  # def update(conn, %{"id" => id, "data" => %{"attributes" => params}}) do
+  #   movie_round = Repo.get!(Wager, id)
+  #
+  #   changeset = MovieRound.changeset(movie_round, params)
+  #
+  #   case Repo.update(changeset) do
+  #     {:ok, movie_round} ->
+  #       serialized_movie_round(conn, wager, 200)
+  #     {:error, _changeset} ->
+  #       send_resp(conn, :unprocessable_entity, "")
+  #   end
+  # end
+
+  defp serialized_movie_round(conn, movie_round, status) do
+    serialized_movie_round = MovieRoundSerializer
+      |> JaSerializer.format(movie_round, conn)
+
+    conn
+    |> put_status(status)
+    |> json(serialized_movie_round)
   end
 end
