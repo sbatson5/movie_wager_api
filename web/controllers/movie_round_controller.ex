@@ -1,7 +1,7 @@
 defmodule MovieWagerApi.MovieRoundController do
   use MovieWagerApi.Web, :controller
 
-  alias MovieWagerApi.{Repo, MovieRound, MovieRoundSerializer}
+  alias MovieWagerApi.{MovieRound, MovieRoundSerializer, Repo, Scorer}
 
   def index(conn, _params) do
     movie_rounds = Repo.all(MovieRound)
@@ -30,6 +30,7 @@ defmodule MovieWagerApi.MovieRoundController do
 
     case Repo.update(changeset) do
       {:ok, movie_round} ->
+        Scorer.finalize_results(movie_round)
         serialized_movie_round(conn, movie_round, 200)
       {:error, _changeset} ->
         send_resp(conn, :unprocessable_entity, "")
