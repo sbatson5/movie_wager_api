@@ -30,6 +30,14 @@ defmodule MovieWagerApi.WagerController do
     serialized_wager(conn, wagers, 200)
   end
 
+  def index(conn, %{"movie_round_id" => movie_round_id}) do
+    wagers = Wager
+      |> where(movie_round_id: ^movie_round_id)
+      |> Repo.all
+
+    serialized_wager(conn, wagers, 200)
+  end
+
   def update(conn, %{"id" => id, "data" => %{"attributes" => wager_params}}) do
     wager = Repo.get!(Wager, id)
 
