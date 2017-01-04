@@ -19,7 +19,7 @@ defmodule MovieWagerApi.Router do
   scope "/api/v1", MovieWagerApi do
     pipe_through :api
 
-    resources "/movie-rounds", MovieRoundController, only: [:index, :create, :show]
+    resources "/movie-rounds", MovieRoundController, only: [:index, :create, :show, :update]
     resources "/users", UserController, only: [:show]
     resources "/twitter-auth", TwitterController, only: [:create]
     get "/session", SessionController, :show

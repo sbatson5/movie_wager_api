@@ -49,4 +49,18 @@ defmodule MovieWagerApi.MovieRoundControllerTest do
       assert resp.status == 422
     end
   end
+
+  describe "PATCH update" do
+    test "it updates and returns a valid movie_round", %{conn: conn} do
+      movie_round = insert(:movie_round, box_office_amount: nil)
+
+      json = json_for(:wager, %{box_office_amount: 1000})
+
+      resp = conn
+        |> put(movie_round_path(conn, :update, movie_round.id), json)
+        |> json_response(200)
+
+      assert resp["data"]["attributes"]["box-office-amount"] == 1000
+    end
+  end
 end
