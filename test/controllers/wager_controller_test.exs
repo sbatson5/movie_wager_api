@@ -35,6 +35,18 @@ defmodule MovieWagerApi.WagerControllerTest do
       assert length(resp["data"]) == 2
       assert ids_from_response(resp) == [wager_one.id, wager_two.id]
     end
+
+    test "it returns wagers for a given place", %{conn: conn} do
+      [wager_one, wager_two] = insert_pair(:wager, place: 1)
+      insert_pair(:wager, place: 2)
+
+      resp = conn
+        |> get(wager_path(conn, :index, %{place: 1}))
+        |> json_response(200)
+
+      assert length(resp["data"]) == 2
+      assert ids_from_response(resp) == [wager_one.id, wager_two.id]
+    end
   end
 
   describe "POST create" do
