@@ -26,7 +26,7 @@ defmodule MovieWagerApi.TwitterController do
   end
 
   def create(conn, _) do
-    token = ExTwitter.request_token("#{@redirect_url}/authenticated")
+    token = ExTwitter.request_token("#{@redirect_url}/twitter-auth")
     {:ok, authenticate_url} = ExTwitter.authenticate_url(token.oauth_token)
 
     json(conn, %{"url" => authenticate_url})
