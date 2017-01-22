@@ -52,6 +52,10 @@ To start your Phoenix app:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
+If you get errors regarding connecting to your database, you may need to start postgres manually:
+
+`pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start`
+
 Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
 
 ## Learn more
