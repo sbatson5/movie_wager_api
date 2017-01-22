@@ -8,4 +8,6 @@ defmodule MovieWagerApi.MovieRoundSerializer do
     :box_office_amount,
     :title
   ]
+
+  def id(%{code: code}, _conn), do: code
 end

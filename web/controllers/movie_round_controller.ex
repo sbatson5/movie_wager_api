@@ -8,8 +8,8 @@ defmodule MovieWagerApi.MovieRoundController do
     serialized_movie_round(conn, movie_rounds, 200)
   end
 
-  def show(conn, %{"id" => id}) do
-    movie_round = Repo.get(MovieRound, id)
+  def show(conn, %{"id" => identifier}) do
+    movie_round = Repo.one!(MovieRound.by_id_or_code(identifier))
     serialized_movie_round(conn, movie_round, 200)
   end
 
@@ -24,8 +24,8 @@ defmodule MovieWagerApi.MovieRoundController do
     end
   end
 
-  def update(conn, %{"id" => id, "data" => %{"attributes" => params}}) do
-    movie_round = Repo.get!(MovieRound, id)
+  def update(conn, %{"id" => identifier, "data" => %{"attributes" => params}}) do
+    movie_round = Repo.one!(MovieRound.by_id_or_code(identifier))
     changeset = MovieRound.changeset(movie_round, params)
 
     case Repo.update(changeset) do

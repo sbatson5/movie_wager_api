@@ -1,7 +1,7 @@
 defmodule MovieWagerApi.WagerController do
   use MovieWagerApi.Web, :controller
 
-  alias MovieWagerApi.{Wager, WagerSerializer}
+  alias MovieWagerApi.{Wager, WagerSerializer, MovieRound}
 
   def create(conn, %{"data" => %{"attributes" => wager_params, "relationships" => relationship_params}}) do
     params = get_relationship_ids(relationship_params)
@@ -21,18 +21,22 @@ defmodule MovieWagerApi.WagerController do
     end
   end
 
-  def index(conn, %{"user_id" => user_id, "movie_round_id" => movie_round_id}) do
+  def index(conn, %{"user_id" => user_id, "movie_round_id" => identifier}) do
+    movie_round = Repo.one(MovieRound.by_id_or_code(identifier))
+
     wagers = Wager
       |> where(user_id: ^user_id)
-      |> where(movie_round_id: ^movie_round_id)
+      |> where(movie_round_id: ^movie_round.id)
       |> Repo.all
 
     serialized_wager(conn, wagers, 200)
   end
 
-  def index(conn, %{"movie_round_id" => movie_round_id}) do
+  def index(conn, %{"movie_round_id" => identifier}) do
+    movie_round = Repo.one(MovieRound.by_id_or_code(identifier))
+
     wagers = Wager
-      |> where(movie_round_id: ^movie_round_id)
+      |> where(movie_round_id: ^movie_round.id)
       |> Repo.all
 
     serialized_wager(conn, wagers, 200)
