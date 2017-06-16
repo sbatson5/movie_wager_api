@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/joekain/bmark.svg?branch=master)](https://travis-ci.org/joekain/bmark)
+[![Build Status](https://travis-ci.org/sbatson5/movie_wager_api.svg?branch=master)](https://travis-ci.org/sbatson5/movie_wager_api)
 
 # MovieWagerApi
 
