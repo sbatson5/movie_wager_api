@@ -5,7 +5,7 @@ defmodule MovieWagerApi.Wager do
     field :amount, :integer
     field :place, :integer
 
-    timestamps
+    timestamps()
 
     belongs_to :user, MovieWagerApi.User
     belongs_to :movie_round, MovieWagerApi.MovieRound

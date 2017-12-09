@@ -19,7 +19,7 @@ defmodule MovieWagerApi.Mixfile do
   def application do
     [mod: {MovieWagerApi, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :ja_serializer, :extwitter]]
+                    :phoenix_ecto, :postgrex, :ja_serializer, :extwitter, :httpoison]]
   end
 
   # Specifies which paths to compile per environment.
@@ -32,16 +32,18 @@ defmodule MovieWagerApi.Mixfile do
   defp deps do
     [{:ex_machina, "~> 1.0", only: :test},
      {:ja_serializer, "~> 0.11.1"},
-     {:phoenix, "~> 1.2.1"},
+     {:phoenix, "~> 1.3.0"},
      {:phoenix_pubsub, "~> 1.0"},
-     {:phoenix_ecto, "~> 3.0"},
+     {:phoenix_ecto, "~> 3.2"},
      {:postgrex, ">= 0.0.0"},
-     {:phoenix_html, "~> 2.6"},
+     {:phoenix_html, "~> 2.10"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:distillery, "~> 0.10" },
-     {:oauth, github: "tim/erlang-oauth"},
+     {:oauth2, "~> 0.9.0"},
+     {:httpoison, "0.13.0", override: true},
+     {:cors_plug, "~> 1.2"},
      {:extwitter, "~> 0.6"}]
   end
 

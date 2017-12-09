@@ -25,5 +25,6 @@ defmodule MovieWagerApi.Router do
     get "/session", SessionController, :show
     delete "/session", SessionController, :delete
     resources "/wagers", WagerController, only: [:create, :index, :update]
+    resources "/auth", UserController, only: [:create]
   end
 end
