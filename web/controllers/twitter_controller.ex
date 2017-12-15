@@ -43,17 +43,17 @@ defmodule MovieWagerApi.TwitterController do
   end
 
   defp add_or_update_user(user) do
-    # changes = %{
-    #   twitter_id: user.id,
-    #   screen_name: user.screen_name,
-    #   profile_image_url: user.profile_image_url,
-    #   name: user.name
-    # }
-    # case Repo.get_by(User, twitter_id: user.id) do
-    #   nil ->
-    #     User.changeset(%User{}, changes) |> Repo.insert
-    #   user_record ->
-    #     User.changeset(user_record, changes) |> Repo.update
-    # end
+    changes = %{
+      twitter_id: user.id,
+      screen_name: user.screen_name,
+      profile_image_url: user.profile_image_url,
+      name: user.name
+    }
+    case Repo.get_by(User, twitter_id: user.id) do
+      nil ->
+        User.changeset(%User{}, changes) |> Repo.insert
+      user_record ->
+        User.changeset(user_record, changes) |> Repo.update
+    end
   end
 end

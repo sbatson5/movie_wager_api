@@ -10,6 +10,7 @@ defmodule MovieWagerApi.LoadAccount do
   end
 
   defp load_access_token(conn) do
+    IO.inspect(conn)
     IO.puts("trying to load")
     if access_token = get_session(conn, :access_token) do
       IO.puts("we found stuff")

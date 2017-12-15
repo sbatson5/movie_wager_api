@@ -21,17 +21,26 @@ defmodule MovieWagerApi.UserController do
       "X-Requested-With": "XMLHttpRequest"
     }
 
+    conn = put_session(conn, :foo, "foo bar")
+
     case HTTPoison.post("https://accounts.google.com/o/oauth2/token", request_body, headers) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         decoded_body = Poison.decode!(body)
+        # |> Authentication.sign_in(decoded_body)
         conn
-        |> Authentication.sign_in(decoded_body)
         |> json(decoded_body)
       {:error, error} -> IO.inspect(error)
     end
   end
 
   def create(conn, %{"id" => google_id, "user" => google_user_info}) do
+    [_, access_token] =
+      conn
+      |> get_req_header("authorization")
+      |> Enum.at(0)
+      |> String.split(" ")
+
+    conn = Authentication.sign_in(conn, access_token) |> IO.inspect
     params = %{
       "family_name" => google_user_info["familyName"],
       "gender" => google_user_info["gender"],
