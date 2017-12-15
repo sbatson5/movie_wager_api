@@ -6,7 +6,18 @@ defmodule MovieWagerApi.LoadAccount do
   def init(_options), do: nil
 
   def call(conn, _options) do
-    conn |> load_user
+    conn |> load_access_token
+  end
+
+  defp load_access_token(conn) do
+    IO.puts("trying to load")
+    if access_token = get_session(conn, :access_token) do
+      IO.puts("we found stuff")
+      IO.puts(access_token)
+      assign(conn, :access_token, access_token)
+    else
+      conn
+    end
   end
 
   defp load_user(conn) do

@@ -1,7 +1,10 @@
 defmodule MovieWagerApi.UserController do
   use MovieWagerApi.Web, :controller
+  # import Plug.Conn, only: [get_session: 2]
 
-  alias MovieWagerApi.{Repo, User, UserSerializer, GoogleUser}
+  alias MovieWagerApi.{Authentication, Repo, User, UserSerializer, GoogleUser}
+
+  @no_authentication "User is not logged in"
 
   def create(conn, %{"code" => code, "redirect_uri" => redirect_uri, "client_id" => client_id}) do
     request_body = %{
@@ -20,7 +23,10 @@ defmodule MovieWagerApi.UserController do
 
     case HTTPoison.post("https://accounts.google.com/o/oauth2/token", request_body, headers) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        json(conn, Poison.decode!(body))
+        decoded_body = Poison.decode!(body)
+        conn
+        |> Authentication.sign_in(decoded_body)
+        |> json(decoded_body)
       {:error, error} -> IO.inspect(error)
     end
   end
@@ -35,7 +41,7 @@ defmodule MovieWagerApi.UserController do
       "picture" => google_user_info["picture"],
       "verified_email" => google_user_info["verifiedEmail"]
     }
-    IO.puts("yo ==============")
+
     GoogleUser
     |> where(google_id: ^google_id)
     |> Repo.one()
@@ -46,7 +52,6 @@ defmodule MovieWagerApi.UserController do
   end
 
   defp update_existing(conn, user, params) do
-    IO.puts("we are updated!!!!")
     changeset = GoogleUser.changeset(user, params)
     case Repo.update(changeset) do
       {:ok, _} ->
@@ -57,8 +62,8 @@ defmodule MovieWagerApi.UserController do
   end
 
   defp create_new_user(conn, google_id, params) do
-    params = params |> Map.put("google_id", google_id) |> IO.inspect
-    IO.puts("hheereerereeee")
+    params = params |> Map.put("google_id", google_id)
+
     changeset = GoogleUser.changeset(%GoogleUser{}, params)
     case Repo.insert(changeset) do
       {:ok, _} ->
@@ -72,5 +77,13 @@ defmodule MovieWagerApi.UserController do
     user = Repo.one!(User.by_id_or_screen_name(identifier))
     serialized_user = JaSerializer.format(UserSerializer, user, conn)
     json(conn, serialized_user)
+  end
+  def show(conn, _) do
+    case conn.assigns[:access_token] do
+      nil ->
+        send_resp(conn, 401, @no_authentication)
+      token ->
+        send_resp(conn, 200, token)
+    end
   end
 end
